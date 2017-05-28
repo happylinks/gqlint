@@ -1,12 +1,15 @@
 {
   "name": "gqlint",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "GraphQL Linter",
+  "main": "./lib/gqlint.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "bin": {
+    "gqlint": "./bin/gqlint.js"
+  },
+  "author": "Michiel Westerbeek <happylinks@gmail.com>",
   "license": "ISC",
   "dependencies": {
     "chalk": "^1.1.3",

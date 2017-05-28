@@ -17,8 +17,8 @@ function initProgram () {
 		.usage('[options] <path>')
 		.option(
 			'-r, --reporter <reporter>',
-			'the reporter to use: cli (default), compact, json',
-			'cli'
+			'the reporter to use: stylish (default), compact, json',
+			'stylish'
 		)
 		.option(
 			'-l --level <level>',

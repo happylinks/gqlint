@@ -78,7 +78,6 @@ module.exports = function(results) {
         ).split("\n").map(el => el.replace(/(\d+)\s+(\d+)/, (m, p1, p2) => chalk.dim(`${p1}:${p2}`))).join("\n")}\n\n`;
     });
 
-    console.log('hallo?', errorCount, warningCount);
     const total = errorCount + warningCount;
 
     if (total > 0) {
