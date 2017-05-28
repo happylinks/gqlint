@@ -4,7 +4,7 @@
   "description": "GraphQL Linter",
   "main": "./lib/gqlint.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "bin": {
     "gqlint": "./bin/gqlint.js"
@@ -20,5 +20,10 @@
     "pluralize": "^5.0.0",
     "text-table": "^0.2.0",
     "wordwrap": "^1.0.0"
+  },
+  "devDependencies": {
+    "jest": "^20.0.4"
+  },
+  "jest": {
   }
 }

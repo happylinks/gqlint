@@ -1,6 +1,28 @@
 const { visit, getLocation } = require('graphql/language');
 const pluralize = require('pluralize');
 
+const isPluralized = (name) => {
+    const pluralized = pluralize(name);
+    return name === pluralized;
+};
+
+const getMessage = (text, name, start) => {
+    const message = `Mutation '${name}' is plural. It's better to use singular mutations.`;
+    const location = getLocation(
+        { body: text },
+        start
+    );
+
+    return {
+        message,
+        line: location.line,
+        column: location.column,
+        ruleId: 'singular.mutations',
+        severity: 1,
+    };
+};
+
+
 module.exports = function(ast, text) {
     const messages = [];
 
@@ -13,22 +35,23 @@ module.exports = function(ast, text) {
             visit(node, {
                 FieldDefinition(node) {
                     const name = node.name.value;
-                    const pluralizedName = pluralize(name);
 
-                    if (name === pluralizedName) {
-                        const message = `Mutation '${name}' is plural. It's better to use singular mutations.`;
-                        const location = getLocation(
-                            { body: text },
-                            node.name.loc.start
-                        );
+                    if (isPluralized(name)) {
+                        messages.push(getMessage(text, name, node.name.loc.start));
+                    }
+                },
+            });
+        },
+        OperationDefinition(node) {
+            if (node.operation !== 'mutation') {
+                return;
+            }
 
-                        messages.push({
-                            message,
-                            line: location.line,
-                            column: location.column,
-                            ruleId: 'singular.mutations',
-                            severity: 1,
-                        });
+            node.selectionSet.selections.forEach(selection => {
+                if (selection.kind === 'Field') {
+                    const name = selection.name.value;
+                    if (isPluralized(name)) {
+                        messages.push(getMessage(text, name, selection.name.loc.start));
                     }
                 }
             });
