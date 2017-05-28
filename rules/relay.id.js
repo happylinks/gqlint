@@ -1,43 +1,43 @@
 const { visit, getLocation } = require('graphql/language');
 
+const checkType = (text, fieldName, node) => {
+    if (node.name.value !== 'ID') {
+        const message = `Field '${fieldName}' uses ${node.name.value}. Please use 'ID' instead.`;
+        const location = getLocation(
+            { body: text },
+            node.name.loc.start
+        );
+
+        return {
+            message,
+            line: location.line,
+            column: location.column,
+            ruleId: 'relay.id',
+            severity: 1,
+        };
+    }
+};
+
 module.exports = function(ast, text) {
     const messages = [];
-    const wrongIdArray = ['GlobalID', 'UUID'];
 
     visit(ast, {
         FieldDefinition(node) {
             const fieldName = node.name.value;
+            // Split camelcase and turn into array.
+            const fieldNameSplit = fieldName.replace(/([a-z](?=[A-Z]))/g, '$1 ').split(' ').map(value => value.toLowerCase());
 
-            if (fieldName.indexOf('id') !== -1) {
-                // console.log(`${node.name.value} contains id`);
-            }
-            visit(node, {
-                NamedType(node) {
-                    const matchIndex = wrongIdArray.indexOf(node.name.value);
-                    if (matchIndex !== -1) {
-                        const message = `Field '${fieldName}' uses ${wrongIdArray[matchIndex]}. Please use 'ID' instead.`;
-                        const location = getLocation(
-                            { body: text },
-                            node.name.loc.start
-                        );
-
-                        messages.push({
-                            message,
-                            line: location.line,
-                            column: location.column,
-                            ruleId: 'relay.id',
-                            severity: 1,
-                        });
+            if (fieldNameSplit.includes('id')) {
+                visit(node, {
+                    NamedType(node) {
+                        const message = checkType(text, fieldName, node);
+                        if (message) {
+                            messages.push(message);
+                        }
                     }
-                }
-            });
+                });
+            }
         },
-        // Last resort
-        // NamedType(node) {
-        //     if (['GlobalID', 'UUID'].includes(node.name.value)) {
-        //         console.error('Please use ID instead of GlobalID or UUID', node.name.loc);
-        //     }
-        // }
     });
 
     return messages;
