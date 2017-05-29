@@ -15,7 +15,7 @@
     "gqlint": "./bin/gqlint.js"
   },
   "author": "Michiel Westerbeek <happylinks@gmail.com>",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "chalk": "^1.1.3",
     "commander": "^2.9.0",
