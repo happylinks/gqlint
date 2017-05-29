@@ -1,5 +1,5 @@
 # GQLint
-[![Build Status](https://travis-ci.org/happylinks/gqlint.svg?branch=master)](https://travis-ci.org/happylinks/gqlint)
+[![Build Status](https://travis-ci.org/happylinks/gqlint.svg?branch=master)](https://travis-ci.org/happylinks/gqlint) [![Coverage Status](https://coveralls.io/repos/github/happylinks/gqlint/badge.svg?branch=master)](https://coveralls.io/github/happylinks/gqlint?branch=master)
 
 GQLint is a GraphQL linter with custom rules.
 
