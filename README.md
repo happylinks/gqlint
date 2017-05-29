@@ -1,7 +1,7 @@
 # GQLint
-GraphQL Linter
+[![Build Status](https://travis-ci.org/happylinks/gqlint.svg?branch=master)](https://travis-ci.org/happylinks/gqlint)
 
-GQLint is a graphql linter.
+GQLint is a GraphQL linter with custom rules.
 
 ## Table of Contents
 - Installation
