@@ -1,7 +1,7 @@
 const { visit, getLocation } = require('graphql/language');
 
 const checkType = (text, fieldName, node) => {
-    if (node.name.value !== 'ID') {
+    if (node.name.value !== 'ID' && fieldName !== 'clientMutationId') {
         const message = `Field '${fieldName}' uses ${node.name.value}. Please use 'ID' instead.`;
         const location = getLocation(
             { body: text },

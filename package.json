@@ -2,6 +2,10 @@
   "name": "gqlint",
   "version": "1.0.0",
   "description": "GraphQL Linter",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/happylinks/gqlint.git"
+  },
   "main": "./lib/gqlint.js",
   "scripts": {
     "test": "jest"
