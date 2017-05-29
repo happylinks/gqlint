@@ -2,14 +2,19 @@
   "name": "gqlint",
   "version": "1.1.1",
   "description": "GraphQL Linter",
-  "keywords": ["graphql", "gql", "lint", "linter"],
+  "keywords": [
+    "graphql",
+    "gql",
+    "lint",
+    "linter"
+  ],
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/happylinks/gqlint.git"
+    "type": "git",
+    "url": "https://github.com/happylinks/gqlint.git"
   },
   "main": "./lib/gqlint.js",
   "scripts": {
-    "test": "jest"
+     "test": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "bin": {
     "gqlint": "./bin/gqlint.js"
@@ -27,9 +32,10 @@
     "wordwrap": "^1.0.0"
   },
   "devDependencies": {
+    "coveralls": "^2.13.1",
     "jest": "^20.0.4"
   },
   "jest": {
-      "verbose": true
+    "verbose": true
   }
 }
