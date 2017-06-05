@@ -49,11 +49,11 @@ This is mostly the same format as used by ESLint.
 ```json
 {
     "rules": {
-        "camelcase": "warning",
-        "fieldname.typename": "warning",
-        "relay.connection": "warning", 
-        "relay.id": "warning", 
-        "singular.mutations": "warning"
+        "camelcase": "warn",
+        "fieldname.typename": "warn",
+        "relay.connection": "warn", 
+        "relay.id": "warn", 
+        "singular.mutations": "warn"
     }
 }
 ```
