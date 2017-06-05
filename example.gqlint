@@ -1,0 +1,9 @@
+{
+    "rules": {
+        "camelcase": "warn",
+        "fieldname.typename": "warn",
+        "relay.connection": "warn", 
+        "relay.id": "warn", 
+        "singular.mutations": "warn"
+    }
+}

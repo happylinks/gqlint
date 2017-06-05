@@ -15,22 +15,38 @@ function initProgram () {
 	program
 		.version(pkg.version)
 		.usage('[options] <path>')
+        .description('Lint GraphQL queries and schemas.')
 		.option(
 			'-r, --reporter <reporter>',
 			'the reporter to use: stylish (default), compact, json',
 			'stylish'
 		)
-		.option(
-			'-l --level <level>',
-			'the level of message to fail on (exit with code 1): error, warning, notice',
-			'error'
-		)
-		.option(
-			'-p, --pretty',
-			'output pretty JSON when using the json reporter'
-		)
+        .option(
+            '-c, --config <config>',
+            'the config file to use: .gqlint (default)',
+            '.gqlint'
+        )
 		.parse(process.argv);
 	reportResult = loadReporter(program.reporter);
+}
+
+function getGQLintConfig () {
+    return new Promise((resolve) => {
+        fs.readFile(program.config, { encoding: 'utf8' }, function(error, data) {
+            if (error) {
+                console.error('Running with default config.');
+                resolve();
+            } else {
+                try {
+                    const json = JSON.parse(data);
+                    resolve(json);
+                } catch (e) {
+                    console.error('Could not parse .gqlint file.');
+                    throw e;
+                }
+            }
+        });
+    });
 }
 
 function runProgram () {
@@ -61,12 +77,14 @@ function runProgramOnStdIn () {
 }
 
 function handleInputSuccess (data, fileName) {
-    var result = gqlint(data, fileName);
-    var output = reportResult(result, program);
-    console.log(output);
-    if (reportShouldFail(result, program.level)) {
-        process.exit(1);
-    }
+    getGQLintConfig().then(gqlintConfig => {
+        var result = gqlint(data, fileName, gqlintConfig || {});
+        var output = reportResult(result, program);
+        console.log(output);
+        if (reportShouldFail(result)) {
+            process.exit(1);
+        }
+    });
 }
 
 function loadReporter (name) {
@@ -94,17 +112,18 @@ function requireFirst (stack, defaultReturn) {
     }
 }
 
-function reportShouldFail (result, level) {
-    if (level === 'none') {
-        return false;
-    }
-    if (level === 'notice') {
-        return (result.length > 0);
-    }
-    if (level === 'warning') {
-        return (result.filter(isWarningOrError).length > 0);
-    }
-    return (result.filter(isError).length > 0);
+function reportShouldFail (result) {
+    let fail = false;
+
+    result.forEach(file => {
+        file.messages.forEach(message => {
+            if (message.severity === 2) {
+                fail = true;
+            }
+        });
+    });
+
+    return fail;
 }
 
 function isError (result) {
