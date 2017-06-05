@@ -38,6 +38,14 @@ npm install -g gqlint
 
 ```
 
+## URL
+You can also use the tool [get-graphql-schema](https://github.com/graphcool/get-graphql-schema) to lint your running API.
+```sh
+get-graphql-schema https://graphql-url.com/graphql | gqlint --reporter codeframe
+```
+
+The Codeframe reporter is used to also show the position of the error within the code.
+
 ## Command line
 ![cli](https://raw.githubusercontent.com/happylinks/gqlint/master/cli.png)
 
