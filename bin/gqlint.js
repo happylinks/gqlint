@@ -34,15 +34,14 @@ function getGQLintConfig() {
   let data;
 
   try {
-    let { data } = fs.readFileSync(program.config, { encoding: 'utf8' });
+    data = fs.readFileSync(program.config, { encoding: 'utf8' });
   } catch (e) {
-    console.error('Running with default config.');
+    console.error('Found no config file, running with default config.');
     return;
   }
 
   try {
-    const json = JSON.parse(data);
-    return json;
+    return JSON.parse(data);
   } catch (e) {
     console.error('Could not parse .gqlint file.');
     throw e;
