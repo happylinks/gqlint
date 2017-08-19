@@ -79,12 +79,12 @@ The three error levels allow you control over how GQLint applies rules.
 ### CamelCase
 Verifies if properties are camelcased.
 
-`Property 'name' is not camelcased.`
+`Property 'Name' is not camelcased.`
 
 ### Fieldname Typename
 Checks if you use the name of the type in your field.
 
-`Type 'User' has a property called 'userId'. Don't use type-names in property-names. Maybe use 'id' instead?`;
+`Type 'User' has a property called 'userId'. Don't use type-names in property-names. Maybe use 'id' instead?`
 
 ### Relay Connection
 Checks if Types ending with Connection have 'edges' and 'pageInfo'.
