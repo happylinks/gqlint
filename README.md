@@ -102,10 +102,11 @@ Checks if mutations are singular (createUser) and not plural (createUsers).
 `Mutation 'createUsers' is plural. It's better to use singular mutations.`
 
 ### Remove/Delete Mutations
-Checks if mutations on single entities use 'delete' (deleteUser) and not 'remove' (removeUser). 
+Checks if mutations on single entities use 'delete' (deleteUser) and not 'remove' (removeUser).  
 Also checks if mutations on relationships use 'remove' (removeUserFromGroup) and not 'delete' (deleteUserFromGroup).
 
-`Mutation 'removeUser' uses 'remove' for a single entity. It's better to use 'deleteUser'.`
+`Mutation 'removeUser' uses 'remove' for a single entity. It's better to use 'deleteUser'.` 
+
 `Mutation '${name}' uses 'delete' for a mutation on a relationship. It's better to use '${suggestion}'.`
 
 ## Plugins
