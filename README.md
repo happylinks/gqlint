@@ -75,11 +75,38 @@ The keys of the rules object are the names of the GQLint rules we currently have
 The three error levels allow you control over how GQLint applies rules.
 
 ## Rules
-- CamelCase
-- Fieldname Typename
-- Relay Connection
-- Relay ID
-- Singular Mutations
+
+### CamelCase
+Verifies if properties are camelcased.
+
+`Property 'name' is not camelcased.`
+
+### Fieldname Typename
+Checks if you use the name of the type in your field.
+
+`Type 'User' has a property called 'userId'. Don't use type-names in property-names. Maybe use 'id' instead?`;
+
+### Relay Connection
+Checks if Types ending with Connection have 'edges' and 'pageInfo'.
+
+`Connection 'UserConnection' does not have fields 'edges, pageInfo'.`
+
+### Relay ID
+Checks if fields that have 'id' in them use the ID type instead of others (string, integer, etc.)
+
+`Field 'id' uses String. Please use 'ID' instead.`
+
+### Singular Mutations
+Checks if mutations are singular (createUser) and not plural (createUsers).
+
+`Mutation 'createUsers' is plural. It's better to use singular mutations.`
+
+### Remove/Delete Mutations
+Checks if mutations on single entities use 'delete' (deleteUser) and not 'remove' (removeUser). 
+Also checks if mutations on relationships use 'remove' (removeUserFromGroup) and not 'delete' (deleteUserFromGroup).
+
+`Mutation 'removeUser' uses 'remove' for a single entity. It's better to use 'deleteUser'.`
+`Mutation '${name}' uses 'delete' for a mutation on a relationship. It's better to use '${suggestion}'.`
 
 ## Plugins
 

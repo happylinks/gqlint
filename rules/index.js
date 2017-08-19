@@ -3,5 +3,6 @@ module.exports = {
   'relay.connection': require('./relay.connection'),
   camelcase: require('./camelcase'),
   'fieldname.typename': require('./fieldname.typename'),
-  'singular.muations': require('./singular.mutations')
+  'singular.mutations': require('./singular.mutations'),
+  'removedelete.mutations': require('./removedelete.mutations')
 };
