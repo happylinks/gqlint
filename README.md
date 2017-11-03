@@ -94,7 +94,7 @@ Checks if Types ending with Connection have 'edges' and 'pageInfo'.
 ### Relay ID
 Checks if fields that have 'id' in them use the ID type instead of others (string, integer, etc.)
 
-`Field 'id' uses String. Please use 'ID' instead.`
+`Field 'id' in Type 'User' uses 'String'. Please use 'ID' instead.`
 
 ### Singular Mutations
 Checks if mutations are singular (createUser) and not plural (createUsers).
