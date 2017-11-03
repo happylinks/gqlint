@@ -25,6 +25,11 @@ const invalid = {
         type User {
             relatedId: String!
         }
+    `,
+  input: `
+        input UserInput {
+            id: GlobalResource!
+        }
     `
 };
 
@@ -62,6 +67,13 @@ describe('Rule: Relay ID', () => {
     expect(results[0].warningCount).toBe(1);
     expect(results[0].messages[0].message).toBe(
       `Field 'relatedId' uses String. Please use 'ID' instead.`
+    );
+  });
+  test('Input', () => {
+    const results = gqLint(invalid.input, '', {});
+    expect(results[0].warningCount).toBe(1);
+    expect(results[0].messages[0].message).toBe(
+      `Field 'id' uses GlobalResource. Please use 'ID' instead.`
     );
   });
 });
