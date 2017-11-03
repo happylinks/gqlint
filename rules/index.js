@@ -4,5 +4,6 @@ module.exports = {
   camelcase: require('./camelcase'),
   'fieldname.typename': require('./fieldname.typename'),
   'singular.mutations': require('./singular.mutations'),
-  'removedelete.mutations': require('./removedelete.mutations')
+  'removedelete.mutations': require('./removedelete.mutations'),
+  'enum.casing': require('./enum.casing')
 };

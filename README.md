@@ -109,6 +109,11 @@ Also checks if mutations on relationships use 'remove' (removeUserFromGroup) and
 
 `Mutation '${name}' uses 'delete' for a mutation on a relationship. It's better to use '${suggestion}'.`
 
+### Enum Casing
+Checks if all the values of a ENUM-type are uppercase. In the future this could take a value like 'uppercase | lowercase | camelCase | snake_case'.  
+
+`Property 'Currency' has invalidly cased values. Please uppercase them.`
+
 ## Plugins
 
 ### Vim
