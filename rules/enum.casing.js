@@ -1,5 +1,5 @@
 const { visit, getLocation } = require('graphql/language');
-const { upperCase } = require('lodash');
+const { toUpper } = require('lodash');
 
 const getMessage = (text, node) => {
   const message = `Property '${node.name
@@ -24,7 +24,7 @@ module.exports = function(ast, text) {
 
       visit(node, {
         EnumValueDefinition(node) {
-          const uppercased = upperCase(node.name.value);
+          const uppercased = toUpper(node.name.value);
           if (uppercased !== node.name.value) {
             valid = false;
           }
