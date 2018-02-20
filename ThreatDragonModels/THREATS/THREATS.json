@@ -5,7 +5,11 @@
     "description": "ja mooi"
   },
   "detail": {
-    "contributors": [],
+    "contributors": [
+      {
+        "name": "Test"
+      }
+    ],
     "diagrams": [
       {
         "title": "Test",
