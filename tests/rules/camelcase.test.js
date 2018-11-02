@@ -1,5 +1,11 @@
 const gqLint = require('../../lib/gqlint');
 
+const options = {
+  rules: {
+    camelcase: 'warn'
+  }
+};
+
 const invalid = {
   objectTypeField: `
         type User {
@@ -18,14 +24,14 @@ const invalid = {
 
 describe('Rule: camelCase', () => {
   test('ObjectType Field', () => {
-    const results = gqLint(invalid.objectTypeField, '', {});
+    const results = gqLint(invalid.objectTypeField, '', options);
     expect(results[0].warningCount).toBe(1);
     expect(results[0].messages[0].message).toBe(
       `Property 'Name' is not camelcased.`
     );
   });
   test('OperationField', () => {
-    const results = gqLint(invalid.operationField, '', {});
+    const results = gqLint(invalid.operationField, '', options);
     expect(results[0].warningCount).toBe(2);
     expect(results[0].messages[0].message).toBe(
       `Property 'User' is not camelcased.`

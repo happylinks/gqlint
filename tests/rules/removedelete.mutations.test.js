@@ -1,5 +1,11 @@
 const gqLint = require('../../lib/gqlint');
 
+const options = {
+  rules: {
+    'removedelete.mutations': 'warn'
+  }
+};
+
 const valid = {
   mutationDelete: `
         mutation deleteUser($input: DeleteUserInput) {
@@ -65,46 +71,46 @@ const invalid = {
 describe('Rule: RemoveDelete', () => {
   describe('Valid GraphQL', () => {
     test('Delete Mutation', () => {
-      const results = gqLint(valid.mutationDelete, '', {});
+      const results = gqLint(valid.mutationDelete, '', options);
       expect(results[0].warningCount).toBe(0);
     });
     test('Delete Schema Mutation', () => {
-      const results = gqLint(valid.schemaMutationDelete, '', {});
+      const results = gqLint(valid.schemaMutationDelete, '', options);
       expect(results[0].warningCount).toBe(0);
     });
     test('Remove Mutation', () => {
-      const results = gqLint(valid.mutationRemove, '', {});
+      const results = gqLint(valid.mutationRemove, '', options);
       expect(results[0].warningCount).toBe(0);
     });
     test('Remove Schema Mutation', () => {
-      const results = gqLint(valid.schemaMutationRemove, '', {});
+      const results = gqLint(valid.schemaMutationRemove, '', options);
       expect(results[0].warningCount).toBe(0);
     });
   });
   describe('Invalid GraphQL', () => {
     test('Delete Mutation', () => {
-      const results = gqLint(invalid.mutationDelete, '', {});
+      const results = gqLint(invalid.mutationDelete, '', options);
       expect(results[0].warningCount).toBe(1);
       expect(results[0].messages[0].message).toBe(
         `Mutation 'removeUser' uses 'remove' for a single entity. It's better to use 'deleteUser'.`
       );
     });
     test('Delete Schema Mutation', () => {
-      const results = gqLint(invalid.schemaMutationDelete, '', {});
+      const results = gqLint(invalid.schemaMutationDelete, '', options);
       expect(results[0].warningCount).toBe(1);
       expect(results[0].messages[0].message).toBe(
         `Mutation 'removeUser' uses 'remove' for a single entity. It's better to use 'deleteUser'.`
       );
     });
     test('Remove Mutation', () => {
-      const results = gqLint(invalid.mutationRemove, '', {});
+      const results = gqLint(invalid.mutationRemove, '', options);
       expect(results[0].warningCount).toBe(1);
       expect(results[0].messages[0].message).toBe(
         `Mutation 'deleteUserFromGroup' uses 'delete' for a mutation on a relationship. It's better to use 'removeUserFromGroup'.`
       );
     });
     test('Remove Schema Mutation', () => {
-      const results = gqLint(invalid.schemaMutationRemove, '', {});
+      const results = gqLint(invalid.schemaMutationRemove, '', options);
       expect(results[0].warningCount).toBe(1);
       expect(results[0].messages[0].message).toBe(
         `Mutation 'deleteUserFromGroup' uses 'delete' for a mutation on a relationship. It's better to use 'removeUserFromGroup'.`

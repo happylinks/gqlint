@@ -4,7 +4,9 @@
         "fieldname.typename": "warn",
         "relay.connection": "warn", 
         "relay.id": "warn", 
-        "singular.mutations": "warn"
-        "enum.casing": "warn"
+        "singular.mutations": "warn",
+        "enum.casing": "warn",
+        "description.type": "off",
+        "description.field": "off"
     }
 }

@@ -1,5 +1,11 @@
 const gqLint = require('../../lib/gqlint');
 
+const options = {
+  rules: {
+    'fieldname.typename': 'warn'
+  }
+};
+
 const valid = {
   type: `
         type User {
@@ -21,7 +27,7 @@ const invalid = {
 describe('Rule: FieldnameTypename', () => {
   describe('Valid GraphQL', () => {
     test('Type', () => {
-      const results = gqLint(valid.type, '', {});
+      const results = gqLint(valid.type, '', options);
       expect(results[0].warningCount).toBe(0);
     });
     // test('OperationField', () => {
@@ -33,7 +39,7 @@ describe('Rule: FieldnameTypename', () => {
   });
   describe('Invalid GraphQL', () => {
     test('Type', () => {
-      const results = gqLint(invalid.type, '', {});
+      const results = gqLint(invalid.type, '', options);
       expect(results[0].warningCount).toBe(1);
       expect(results[0].messages[0].message).toBe(
         `Type 'user' has a property called 'userName'. Don't use type-names in property-names. Maybe use 'name' instead?`

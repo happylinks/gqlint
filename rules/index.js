@@ -5,5 +5,7 @@ module.exports = {
   'fieldname.typename': require('./fieldname.typename'),
   'singular.mutations': require('./singular.mutations'),
   'removedelete.mutations': require('./removedelete.mutations'),
-  'enum.casing': require('./enum.casing')
+  'enum.casing': require('./enum.casing'),
+  'description.type': require('./description.type'),
+  'description.field': require('./description.field')
 };

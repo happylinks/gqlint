@@ -1,5 +1,11 @@
 const gqLint = require('../../lib/gqlint');
 
+const options = {
+  rules: {
+    'singular.mutations': 'warn'
+  }
+};
+
 const valid = {
   mutation: `
         mutation createUser($input: CreateUserInput) {
@@ -65,36 +71,36 @@ const invalid = {
 describe('Rule: SingularMutations', () => {
   describe('Valid GraphQL', () => {
     test('Singular Mutation', () => {
-      const results = gqLint(valid.mutation, '', {});
+      const results = gqLint(valid.mutation, '', options);
       expect(results[0].warningCount).toBe(0);
     });
     test('Singular Schema Mutation', () => {
-      const results = gqLint(valid.schemaMutation, '', {});
+      const results = gqLint(valid.schemaMutation, '', options);
       expect(results[0].warningCount).toBe(0);
     });
     test('Query Mutation', () => {
-      const results = gqLint(valid.query, '', {});
+      const results = gqLint(valid.query, '', options);
       expect(results[0].warningCount).toBe(0);
     });
     test('Type Definition', () => {
-      const results = gqLint(valid.type, '', {});
+      const results = gqLint(valid.type, '', options);
       expect(results[0].warningCount).toBe(0);
     });
     test('Inline Fragment', () => {
-      const results = gqLint(valid.inlineFragment, '', {});
+      const results = gqLint(valid.inlineFragment, '', options);
       expect(results[0].warningCount).toBe(0);
     });
   });
   describe('Invalid GraphQL', () => {
     test('Pluralized Mutation', () => {
-      const results = gqLint(invalid.mutation, '', {});
+      const results = gqLint(invalid.mutation, '', options);
       expect(results[0].warningCount).toBe(1);
       expect(results[0].messages[0].message).toBe(
         `Mutation 'createUsers' is plural. It's better to use singular mutations.`
       );
     });
     test('Pluralized Schema Mutation', () => {
-      const results = gqLint(invalid.schemaMutation, '', {});
+      const results = gqLint(invalid.schemaMutation, '', options);
       expect(results[0].warningCount).toBe(1);
       expect(results[0].messages[0].message).toBe(
         `Mutation 'createUsers' is plural. It's better to use singular mutations.`
