@@ -1,6 +1,6 @@
 {
   "name": "gqlint",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "description": "GraphQL Linter",
   "keywords": ["graphql", "gql", "lint", "linter"],
   "repository": {
