@@ -1,11 +1,15 @@
 #!/usr/bin/env node
 'use strict';
 
-var fs = require('fs');
-var gqlint = require('../lib/gqlint');
-var path = require('path');
-var pkg = require('../package.json');
 var program = require('commander');
+
+var fs = require('fs');
+var os = require('os');
+var path = require('path');
+
+var gqlint = require('../lib/gqlint');
+var pkg = require('../package.json');
+
 var reportResult;
 
 initProgram();
@@ -23,7 +27,7 @@ function initProgram() {
     )
     .option(
       '-c, --config <config>',
-      'the config file to use: .gqlint (default)',
+      'the config filename to use: .gqlint (default)',
       '.gqlint'
     )
     .parse(process.argv);
@@ -33,8 +37,20 @@ function initProgram() {
 function getGQLintConfig() {
   let data;
 
+  // paths to search for a config file in order of precedence
+  let paths = ['.', path.dirname(program.args[0]), os.homedir()];
+
+  for (let p of paths) {
+    let configPath = path.join(p, program.config);
+    if (fs.existsSync(configPath)) {
+      program.fullConfigPath = configPath;
+      console.warn('Using config file: ' + program.fullConfigPath);
+      break;
+    }
+  }
+
   try {
-    data = fs.readFileSync(program.config, { encoding: 'utf8' });
+    data = fs.readFileSync(program.fullConfigPath, { encoding: 'utf8' });
   } catch (e) {
     console.error('Found no config file, running with default config.');
     return;
@@ -43,7 +59,7 @@ function getGQLintConfig() {
   try {
     return JSON.parse(data);
   } catch (e) {
-    console.error('Could not parse .gqlint file.');
+    console.error(`Could not parse ${program.config} config file.`);
     throw e;
   }
 }
