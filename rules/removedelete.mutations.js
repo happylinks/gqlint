@@ -58,12 +58,43 @@ const checkWrongName = (text, node, messages, name) => {
   }
 };
 
+function getMutationNames(ast) {
+  const mutationNames = [];
+
+  visit(ast, {
+    ObjectTypeExtension(node) {
+      if (
+        node.name.value !== 'Mutation' ||
+        node.name.value === 'GraphQLMutation'
+      ) {
+        return;
+      }
+      visit(node, {
+        FieldDefinition(node) {
+          mutationNames.push(node.type.name.value);
+        }
+      });
+    },
+    ObjectTypeDefinition(node) {
+      if (
+        node.name.value === 'Mutation' ||
+        node.name.value === 'GraphQLMutation'
+      ) {
+        mutationNames.push(node.name.value);
+      }
+    }
+  });
+  return mutationNames;
+}
+
 module.exports = function(ast, text) {
   const messages = [];
 
+  const mutationNames = getMutationNames(ast);
+
   visit(ast, {
     ObjectTypeDefinition(node) {
-      if (node.name.value !== 'GraphQLMutation') {
+      if (mutationNames.indexOf(node.name.value) < 0) {
         return;
       }
 
