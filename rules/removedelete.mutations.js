@@ -63,7 +63,10 @@ function getMutationNames(ast) {
 
   visit(ast, {
     ObjectTypeExtension(node) {
-      if (node.name.value !== 'Mutation') {
+      if (
+        node.name.value !== 'Mutation' ||
+        node.name.value === 'GraphQLMutation'
+      ) {
         return;
       }
       visit(node, {
@@ -73,7 +76,10 @@ function getMutationNames(ast) {
       });
     },
     ObjectTypeDefinition(node) {
-      if (node.name.value === 'Mutation') {
+      if (
+        node.name.value === 'Mutation' ||
+        node.name.value === 'GraphQLMutation'
+      ) {
         mutationNames.push(node.name.value);
       }
     }
